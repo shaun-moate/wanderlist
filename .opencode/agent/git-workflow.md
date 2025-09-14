@@ -1,7 +1,6 @@
 ---
 description: Use proactively to handle git operations, branch management, commits, and PR creation for Agent OS workflows
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
 temperature: 0.3
 tools:
   write: false

@@ -1,7 +1,6 @@
 ---
 description: Use proactively to retrieve and extract relevant information from Agent OS documentation files. Checks if content is already in context before returning.
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
 temperature: 0.1
 tools:
   write: false

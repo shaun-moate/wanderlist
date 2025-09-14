@@ -1,6 +1,5 @@
 ---
 description: Create a detailed spec for a new feature with technical specifications and task breakdown
-agent: spec-writer
 ---
 
 Create a detailed spec for a new feature with technical specifications and task breakdown

@@ -1,6 +1,5 @@
 ---
 description: Analyze your product's codebase and install Agent OS
-agent: product-manager
 ---
 
 Analyze your product's codebase and install Agent OS

@@ -1,6 +1,5 @@
 ---
 description: Create a tasks list with sub-tasks to execute a feature based on its spec.
-agent: task-planner
 ---
 
 Create a tasks list with sub-tasks to execute a feature based on its spec.

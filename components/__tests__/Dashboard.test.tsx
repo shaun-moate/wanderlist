@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Dashboard } from '../Dashboard'
-import { Trip } from '../../lib/trip'
+import { Trip, TripStage } from '../../lib/trip'
 
 // Mock the trip module
 jest.mock('../../lib/trip', () => ({
@@ -48,6 +48,7 @@ describe('Dashboard Component', () => {
       startDate: '2025-07-01',
       endDate: '2025-07-07',
       notes: 'Family vacation',
+      stage: 'daydream' as TripStage,
       createdAt: '2025-01-15T10:00:00Z',
       updatedAt: '2025-01-15T10:00:00Z'
     },
@@ -56,6 +57,7 @@ describe('Dashboard Component', () => {
       title: 'Weekend Getaway',
       startDate: '2025-03-15',
       endDate: '2025-03-16',
+      stage: 'quest' as TripStage,
       createdAt: '2025-01-15T10:00:00Z',
       updatedAt: '2025-01-15T10:00:00Z'
     }
@@ -86,6 +88,36 @@ describe('Dashboard Component', () => {
       expect(dashboard).toBeInTheDocument()
       expect(dashboard).toHaveClass('min-h-screen', 'bg-gray-50')
     })
+
+    it('should render stage sections for Daydreams, Quests, and Tales', () => {
+      render(<Dashboard />)
+
+      expect(screen.getByTestId('daydreams-section')).toBeInTheDocument()
+      expect(screen.getByTestId('quests-section')).toBeInTheDocument()
+      expect(screen.getByTestId('tales-section')).toBeInTheDocument()
+    })
+
+    it('should display section headers for each narrative stage', () => {
+      render(<Dashboard />)
+
+      expect(screen.getByText('🌟 Daydreams')).toBeInTheDocument()
+      expect(screen.getByText('🗺️ Quests')).toBeInTheDocument()
+      expect(screen.getByText('📖 Tales')).toBeInTheDocument()
+    })
+
+    it('should have responsive stage section layout', () => {
+      render(<Dashboard />)
+
+      const daydreamsSection = screen.getByTestId('daydreams-section')
+      const questsSection = screen.getByTestId('quests-section')
+      const talesSection = screen.getByTestId('tales-section')
+
+      expect(daydreamsSection).toHaveClass('space-y-4')
+      expect(questsSection).toHaveClass('space-y-4')
+      expect(talesSection).toHaveClass('space-y-4')
+    })
+
+
   })
 
   describe('Trip List Rendering', () => {
@@ -98,12 +130,17 @@ describe('Dashboard Component', () => {
       expect(screen.getByText('Weekend Getaway')).toBeInTheDocument()
     })
 
-    it('should render trips in a responsive grid', () => {
+    it('should render trips in stage-specific responsive grids', () => {
       render(<Dashboard />)
 
-      const tripGrid = screen.getByTestId('trip-grid')
-      expect(tripGrid).toBeInTheDocument()
-      expect(tripGrid).toHaveClass('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3')
+      // Check that each stage section has its own responsive grid
+      const daydreamsGrid = screen.getByTestId('daydreams-section').querySelector('.grid')
+      const questsGrid = screen.getByTestId('quests-section').querySelector('.grid')
+      const talesGrid = screen.getByTestId('tales-section').querySelector('.grid')
+
+      expect(daydreamsGrid).toHaveClass('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3')
+      expect(questsGrid).toHaveClass('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3')
+      expect(talesGrid).toHaveClass('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3')
     })
 
     it('should handle empty trip list', () => {

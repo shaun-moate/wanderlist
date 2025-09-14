@@ -1,7 +1,6 @@
 ---
 description: Use proactively to determine and output today's date including the current year, month and day. Checks if content is already in context before returning.
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
 temperature: 0.1
 tools:
   write: false
