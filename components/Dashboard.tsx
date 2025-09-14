@@ -162,13 +162,51 @@ export function Dashboard() {
               </Button>
             </div>
           </div>
-        ) : (
-          <div data-testid="trip-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trips.map((trip) => (
-              <TripCard key={trip.id} trip={trip} onStageAdvance={handleStageAdvance} />
-            ))}
-          </div>
-        )}
+         ) : (
+           <div className="space-y-8">
+             {/* Daydreams Section */}
+             <section data-testid="daydreams-section" className="space-y-4">
+               <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
+                 🌟 Daydreams
+               </h2>
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 {trips
+                   .filter((trip) => trip.stage === 'daydream')
+                   .map((trip) => (
+                     <TripCard key={trip.id} trip={trip} onStageAdvance={handleStageAdvance} />
+                   ))}
+               </div>
+             </section>
+
+             {/* Quests Section */}
+             <section data-testid="quests-section" className="space-y-4">
+               <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
+                 🗺️ Quests
+               </h2>
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 {trips
+                   .filter((trip) => trip.stage === 'quest')
+                   .map((trip) => (
+                     <TripCard key={trip.id} trip={trip} onStageAdvance={handleStageAdvance} />
+                   ))}
+               </div>
+             </section>
+
+             {/* Tales Section */}
+             <section data-testid="tales-section" className="space-y-4">
+               <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
+                 📖 Tales
+               </h2>
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 {trips
+                   .filter((trip) => trip.stage === 'tale')
+                   .map((trip) => (
+                     <TripCard key={trip.id} trip={trip} onStageAdvance={handleStageAdvance} />
+                   ))}
+               </div>
+             </section>
+           </div>
+         )}
       </main>
     </div>
   )
