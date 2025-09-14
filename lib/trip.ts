@@ -1,11 +1,14 @@
 // Trip data types and validation utilities
 
+export type TripStage = 'daydream' | 'quest' | 'tale'
+
 export interface Trip {
   id: string
   title: string
   startDate: string
   endDate: string
   notes?: string
+  stage: TripStage
   createdAt: string
   updatedAt: string
 }
@@ -19,7 +22,7 @@ export function validateTrip(trip: any): ValidationResult {
   const errors: string[] = []
 
   // Required fields validation
-  const requiredFields = ['id', 'title', 'startDate', 'endDate', 'createdAt', 'updatedAt']
+  const requiredFields = ['id', 'title', 'startDate', 'endDate', 'stage', 'createdAt', 'updatedAt']
   for (const field of requiredFields) {
     if (!trip[field]) {
       errors.push(`Missing required field: ${field}`)
@@ -51,6 +54,15 @@ export function validateTrip(trip: any): ValidationResult {
     const endDate = new Date(trip.endDate)
     if (startDate > endDate) {
       errors.push('End date cannot be before start date')
+    }
+  }
+
+  // Stage validation
+  if (trip.stage !== undefined) {
+    if (typeof trip.stage !== 'string') {
+      errors.push('Stage must be a string')
+    } else if (!['daydream', 'quest', 'tale'].includes(trip.stage)) {
+      errors.push('Invalid stage value')
     }
   }
 
@@ -110,8 +122,18 @@ export function validateTripNotes(notes?: string): string | null {
   return null
 }
 
+export function validateTripStage(stage: string): string | null {
+  if (!stage || typeof stage !== 'string') {
+    return 'Invalid stage'
+  }
+  if (!['daydream', 'quest', 'tale'].includes(stage)) {
+    return 'Invalid stage'
+  }
+  return null
+}
+
 export function generateTripId(): string {
-  return `trip-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  return `trip-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`
 }
 
 export function createTripTemplate(title: string, startDate: string, endDate: string, notes?: string): Trip {
@@ -122,6 +144,7 @@ export function createTripTemplate(title: string, startDate: string, endDate: st
     startDate,
     endDate,
     notes: notes?.trim(),
+    stage: 'daydream',
     createdAt: now,
     updatedAt: now
   }
@@ -161,7 +184,13 @@ export function loadTrips(): Trip[] {
     if (!stored) return []
 
     const trips = JSON.parse(stored)
-    return Array.isArray(trips) ? trips : []
+    if (!Array.isArray(trips)) return []
+
+    // Add default stage to trips without stage
+    return trips.map(trip => ({
+      ...trip,
+      stage: trip.stage || 'daydream'
+    }))
   } catch (error) {
     console.error('Failed to load trips:', error)
     return []
@@ -196,5 +225,37 @@ export function clearAllTrips(): void {
   } catch (error) {
     console.error('Failed to clear trips:', error)
     throw new Error('Failed to clear trips from local storage')
+  }
+}
+
+export function advanceTripStage(tripId: string): Trip | null {
+  try {
+    const trips = loadTrips()
+    const tripIndex = trips.findIndex(t => t.id === tripId)
+    if (tripIndex === -1) return null
+
+    const trip = trips[tripIndex]
+    let newStage: TripStage
+
+    switch (trip.stage) {
+      case 'daydream':
+        newStage = 'quest'
+        break
+      case 'quest':
+        newStage = 'tale'
+        break
+      case 'tale':
+        return trip // Cannot advance further
+      default:
+        return trip
+    }
+
+    const updatedTrip = { ...trip, stage: newStage, updatedAt: new Date().toISOString() }
+    trips[tripIndex] = updatedTrip
+    localStorage.setItem(TRIPS_STORAGE_KEY, JSON.stringify(trips))
+    return updatedTrip
+  } catch (error) {
+    console.error('Failed to advance trip stage:', error)
+    return null
   }
 }

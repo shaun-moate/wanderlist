@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { TripForm } from './TripForm'
 import { TripCard } from './TripCard'
-import { Trip, loadTrips, saveTrip } from '@/lib/trip'
+import { Trip, TripStage, loadTrips, saveTrip, advanceTripStage } from '@/lib/trip'
 
 export function Dashboard() {
   const [trips, setTrips] = useState<Trip[]>([])
@@ -35,7 +35,7 @@ export function Dashboard() {
   const handleCreateTrip = async (trip: Trip) => {
     try {
       setIsCreating(true)
-      await saveTrip(trip)
+      saveTrip(trip)
       await loadTripsData() // Refresh the trip list
       setIsCreateModalOpen(false)
     } catch (err) {
@@ -48,6 +48,25 @@ export function Dashboard() {
 
   const handleCancelCreate = () => {
     setIsCreateModalOpen(false)
+  }
+
+  const handleStageAdvance = async (tripId: string, newStage: TripStage) => {
+    try {
+      // Simple confirmation
+      const stageNames = { daydream: 'Daydream', quest: 'Quest', tale: 'Tale' }
+      const confirmed = window.confirm(`Advance this trip to ${stageNames[newStage]} stage?`)
+      if (!confirmed) return
+
+      const updatedTrip = advanceTripStage(tripId)
+      if (updatedTrip) {
+        await loadTripsData() // Refresh the trip list
+      } else {
+        setError('Failed to advance trip stage. Please try again.')
+      }
+    } catch (err) {
+      console.error('Failed to advance trip stage:', err)
+      setError('Failed to advance trip stage. Please try again.')
+    }
   }
 
   const getTripCountText = () => {
@@ -146,7 +165,7 @@ export function Dashboard() {
         ) : (
           <div data-testid="trip-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {trips.map((trip) => (
-              <TripCard key={trip.id} trip={trip} />
+              <TripCard key={trip.id} trip={trip} onStageAdvance={handleStageAdvance} />
             ))}
           </div>
         )}

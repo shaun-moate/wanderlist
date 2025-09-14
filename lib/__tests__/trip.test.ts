@@ -10,8 +10,10 @@ import {
   validateTripTitle,
   validateTripDates,
   validateTripNotes,
+  validateTripStage,
   generateTripId,
-  createTripTemplate
+  createTripTemplate,
+  advanceTripStage
 } from '../trip'
 
 describe('Trip Interface and Data Validation', () => {
@@ -23,6 +25,7 @@ describe('Trip Interface and Data Validation', () => {
         startDate: '2025-07-01',
         endDate: '2025-07-07',
         notes: 'Family vacation to Yellowstone',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -32,6 +35,7 @@ describe('Trip Interface and Data Validation', () => {
       expect(trip.startDate).toBe('2025-07-01')
       expect(trip.endDate).toBe('2025-07-07')
       expect(trip.notes).toBe('Family vacation to Yellowstone')
+      expect(trip.stage).toBe('daydream')
     })
 
     it('should allow optional notes field', () => {
@@ -40,11 +44,13 @@ describe('Trip Interface and Data Validation', () => {
         title: 'Quick Weekend Getaway',
         startDate: '2025-03-15',
         endDate: '2025-03-16',
+        stage: 'quest',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
 
       expect(trip.notes).toBeUndefined()
+      expect(trip.stage).toBe('quest')
     })
   })
 
@@ -56,6 +62,7 @@ describe('Trip Interface and Data Validation', () => {
         startDate: '2025-07-01',
         endDate: '2025-07-07',
         notes: 'Family vacation to Yellowstone',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -75,6 +82,7 @@ describe('Trip Interface and Data Validation', () => {
       const result = validateTrip(invalidTrip)
       expect(result.isValid).toBe(false)
       expect(result.errors).toContain('Missing required field: id')
+      expect(result.errors).toContain('Missing required field: stage')
       expect(result.errors).toContain('Missing required field: createdAt')
       expect(result.errors).toContain('Missing required field: updatedAt')
     })
@@ -85,6 +93,7 @@ describe('Trip Interface and Data Validation', () => {
         title: '',
         startDate: '2025-07-01',
         endDate: '2025-07-07',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -101,6 +110,7 @@ describe('Trip Interface and Data Validation', () => {
         title: longTitle,
         startDate: '2025-07-01',
         endDate: '2025-07-07',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -116,6 +126,7 @@ describe('Trip Interface and Data Validation', () => {
         title: 'Summer Road Trip',
         startDate: '07/01/2025', // Wrong format
         endDate: '2025-07-07',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -131,6 +142,7 @@ describe('Trip Interface and Data Validation', () => {
         title: 'Summer Road Trip',
         startDate: '2025-07-07',
         endDate: '2025-07-01', // Before start date
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -148,6 +160,7 @@ describe('Trip Interface and Data Validation', () => {
         startDate: '2025-07-01',
         endDate: '2025-07-07',
         notes: longNotes,
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -165,6 +178,7 @@ describe('Trip Interface and Data Validation', () => {
         title: 'Summer Road Trip',
         startDate: '2025-07-01',
         endDate: '2025-07-07',
+        stage: 'daydream',
         createdAt: '2025-01-15T10:00:00Z',
         updatedAt: '2025-01-15T10:00:00Z'
       }
@@ -209,6 +223,7 @@ describe('Trip Interface and Data Validation', () => {
           startDate: '2025-07-01',
           endDate: '2025-07-07',
           notes: 'Family vacation',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -228,6 +243,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Summer Road Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -254,6 +270,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Test Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -274,6 +291,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Summer Road Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -305,6 +323,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Trip 1',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -314,6 +333,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Trip 2',
           startDate: '2025-08-01',
           endDate: '2025-08-07',
+          stage: 'quest',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -337,6 +357,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Summer Road Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -357,6 +378,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Test Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -379,6 +401,7 @@ describe('Trip Interface and Data Validation', () => {
           title: 'Summer Road Trip',
           startDate: '2025-07-01',
           endDate: '2025-07-07',
+          stage: 'daydream',
           createdAt: '2025-01-15T10:00:00Z',
           updatedAt: '2025-01-15T10:00:00Z'
         }
@@ -399,6 +422,56 @@ describe('Trip Interface and Data Validation', () => {
 
         expect(() => clearAllTrips()).toThrow('Failed to clear trips from local storage')
       })
+    })
+  })
+
+  describe('Stage Data Handling', () => {
+    it('should add default stage to trips without stage', () => {
+      const tripWithoutStage = {
+        id: 'trip-1',
+        title: 'Summer Road Trip',
+        startDate: '2025-07-01',
+        endDate: '2025-07-07',
+        notes: 'Family vacation',
+        createdAt: '2025-01-15T10:00:00Z',
+        updatedAt: '2025-01-15T10:00:00Z'
+      }
+
+      localStorage.setItem('wanderlist_trips', JSON.stringify([tripWithoutStage]))
+
+      const trips = loadTrips()
+      expect(trips).toHaveLength(1)
+      expect(trips[0].stage).toBe('daydream')
+    })
+
+    it('should preserve existing stage', () => {
+      const tripWithStage = {
+        id: 'trip-1',
+        title: 'Summer Road Trip',
+        startDate: '2025-07-01',
+        endDate: '2025-07-07',
+        notes: 'Family vacation',
+        stage: 'quest',
+        createdAt: '2025-01-15T10:00:00Z',
+        updatedAt: '2025-01-15T10:00:00Z'
+      }
+
+      localStorage.setItem('wanderlist_trips', JSON.stringify([tripWithStage]))
+
+      const trips = loadTrips()
+      expect(trips).toHaveLength(1)
+      expect(trips[0].stage).toBe('quest')
+    })
+
+    it('should validate valid stages', () => {
+      expect(validateTripStage('daydream')).toBeNull()
+      expect(validateTripStage('quest')).toBeNull()
+      expect(validateTripStage('tale')).toBeNull()
+    })
+
+    it('should reject invalid stages', () => {
+      expect(validateTripStage('invalid')).toBe('Invalid stage')
+      expect(validateTripStage('')).toBe('Invalid stage')
     })
   })
 
@@ -459,6 +532,7 @@ describe('Trip Interface and Data Validation', () => {
         expect(trip.startDate).toBe('2025-07-01')
         expect(trip.endDate).toBe('2025-07-07')
         expect(trip.notes).toBe('Family vacation')
+        expect(trip.stage).toBe('daydream')
         expect(trip.id).toMatch(/^trip-\d+-[a-z0-9]+$/)
         expect(trip.createdAt).toBe(trip.updatedAt)
       })
@@ -467,6 +541,69 @@ describe('Trip Interface and Data Validation', () => {
         const trip = createTripTemplate('Summer Trip', '2025-07-01', '2025-07-07')
 
         expect(trip.notes).toBeUndefined()
+        expect(trip.stage).toBe('daydream')
+      })
+    })
+
+    describe('advanceTripStage function', () => {
+      it('should advance daydream to quest', () => {
+        const trip: Trip = {
+          id: 'trip-1',
+          title: 'Summer Road Trip',
+          startDate: '2025-07-01',
+          endDate: '2025-07-07',
+          stage: 'daydream',
+          createdAt: '2025-01-15T10:00:00Z',
+          updatedAt: '2025-01-15T10:00:00Z'
+        }
+
+        localStorage.setItem('wanderlist_trips', JSON.stringify([trip]))
+
+        const updatedTrip = advanceTripStage('trip-1')
+        expect(updatedTrip).not.toBeNull()
+        expect(updatedTrip!.stage).toBe('quest')
+        expect(updatedTrip!.updatedAt).not.toBe(trip.updatedAt)
+      })
+
+      it('should advance quest to tale', () => {
+        const trip: Trip = {
+          id: 'trip-1',
+          title: 'Summer Road Trip',
+          startDate: '2025-07-01',
+          endDate: '2025-07-07',
+          stage: 'quest',
+          createdAt: '2025-01-15T10:00:00Z',
+          updatedAt: '2025-01-15T10:00:00Z'
+        }
+
+        localStorage.setItem('wanderlist_trips', JSON.stringify([trip]))
+
+        const updatedTrip = advanceTripStage('trip-1')
+        expect(updatedTrip).not.toBeNull()
+        expect(updatedTrip!.stage).toBe('tale')
+      })
+
+      it('should not advance tale stage', () => {
+        const trip: Trip = {
+          id: 'trip-1',
+          title: 'Summer Road Trip',
+          startDate: '2025-07-01',
+          endDate: '2025-07-07',
+          stage: 'tale',
+          createdAt: '2025-01-15T10:00:00Z',
+          updatedAt: '2025-01-15T10:00:00Z'
+        }
+
+        localStorage.setItem('wanderlist_trips', JSON.stringify([trip]))
+
+        const updatedTrip = advanceTripStage('trip-1')
+        expect(updatedTrip).not.toBeNull()
+        expect(updatedTrip!.stage).toBe('tale') // Should remain tale
+      })
+
+      it('should return null for non-existent trip', () => {
+        const result = advanceTripStage('nonexistent')
+        expect(result).toBeNull()
       })
     })
   })

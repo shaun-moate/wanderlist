@@ -1,7 +1,6 @@
 ---
 description: Execute the next task.
 agent: developer
-model: anthropic/claude-3-5-sonnet-20241022
 ---
 
 Execute the next task.
