@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wanderlist 🌍
 
-## Getting Started
+**Transform your family travel planning into a beautiful story**
 
-First, run the development server:
+Wanderlist treats each trip like a chapter in your family's adventure book. No more boring checklists — just meaningful narratives of your family's journey through the world.
+
+## ✨ What's Wanderlist?
+
+Wanderlist is a family travel planning app that helps dads and parents organize trips with a storytelling approach. Instead of corporate-style "To Do/In Progress/Done" columns, Wanderlist uses "Daydreams," "Quests," and "Tales" to create emotional investment in family adventures.
+
+### 🎯 Key Features (Coming Soon)
+
+- **Daydreams, Quests & Tales** - Narrative trip progression
+- **Story Cards** - Rich trip information with photos and notes
+- **Memory Mode** - Timeline view of completed family adventures
+- **Family Sparks** - Quick inspiration capture
+- **At-a-Glance Dashboard** - Whimsical progress overview
+
+## 🚀 Current Status
+
+### ✅ **Completed: Data Foundation**
+- **Trip Data Types** - Complete TypeScript interfaces and validation
+- **localStorage Integration** - Persistent trip storage with error handling
+- **Comprehensive Testing** - 30+ tests covering all data operations
+- **Validation System** - Robust input validation and error messages
+
+### 🔄 **In Progress: Core Trip Creation**
+- Trip creation form component
+- Trip card display components
+- Dashboard integration
+- Form validation and error handling
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 with React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS with shadcn/ui components
+- **Testing:** Jest + React Testing Library
+- **Storage:** Browser localStorage (MVP)
+- **Deployment:** Vercel
+
+## 🏃‍♂️ Getting Started
+
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended) or npm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd wanderlist
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   # or
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   pnpm dev
+   # or
+   npm run dev
+   ```
+
+4. **Open your browser**
+   - Navigate to [http://localhost:3000](http://localhost:3000)
+   - The app will hot-reload as you make changes
+
+### Testing
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Run all tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests for specific file
+pnpm test -- lib/__tests__/trip.test.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+wanderlist/
+├── .agent-os/                 # Agent OS documentation and specs
+│   ├── product/              # Mission, roadmap, tech stack
+│   └── specs/                # Feature specifications
+├── app/                      # Next.js app directory
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # Root layout
+│   └── page.tsx             # Home page
+├── lib/                      # Core business logic
+│   ├── trip.ts              # Trip data types and storage
+│   └── utils.ts             # Utility functions
+├── components/               # React components (coming soon)
+├── public/                   # Static assets
+└── *.config.*               # Configuration files
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Development Roadmap
 
-## Learn More
+### Phase 1: Core Trip Planning Foundation (Current)
+- [x] Trip data types and storage layer
+- [ ] Trip creation form component
+- [ ] Trip card display component
+- [ ] Dashboard integration
+- [ ] Form validation and error handling
 
-To learn more about Next.js, take a look at the following resources:
+### Phase 2: Narrative Magic & Memory Features
+- [ ] Narrative stages system (Daydreams/Quests/Tales)
+- [ ] Memory Mode timeline
+- [ ] Family Sparks quick-add
+- [ ] Enhanced progress dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Phase 3: Polish & Family Touch
+- [ ] Photo and sketch integration
+- [ ] Enhanced animations
+- [ ] Mobile optimization
+- [ ] Family sharing features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+This project uses **Agent OS** for structured development. Each feature follows a complete workflow:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Planning** - Create detailed specifications
+2. **Implementation** - TDD with comprehensive testing
+3. **Review** - Code quality and functionality verification
+4. **Integration** - Merge and deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Development Workflow
+
+1. Check the roadmap in `.agent-os/product/roadmap.md`
+2. Create a feature spec using the Agent OS workflow
+3. Implement with TDD approach
+4. Run full test suite before committing
+5. Update documentation as needed
+
+## 📚 Learn More
+
+- **[Agent OS Documentation](https://buildermethods.com/agent-os)** - Structured development workflow
+- **[Next.js Documentation](https://nextjs.org/docs)** - Framework reference
+- **[Tailwind CSS](https://tailwindcss.com/docs)** - Styling framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - Component library
+
+## 🚀 Deployment
+
+Deploy to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/wanderlist)
+
+## 📄 License
+
+This project is private and proprietary.
+
+---
+
+**Built with ❤️ for families who love to explore**
+
+*Transforming travel planning from a chore into a cherished family story* 📖✨
