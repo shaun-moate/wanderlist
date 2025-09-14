@@ -2,13 +2,13 @@
 
 ## Tasks
 
-- [ ] 1. **Trip Data Types & Storage Layer**
-  - [ ] 1.1 Write tests for Trip interface and data validation
-  - [ ] 1.2 Create Trip TypeScript interface with required fields
-  - [ ] 1.3 Implement localStorage utility functions (save, load, delete)
-  - [ ] 1.4 Add data validation helpers for trip fields
-  - [ ] 1.5 Write tests for localStorage operations
-  - [ ] 1.6 Verify all tests pass
+- [x] 1. **Trip Data Types & Storage Layer**
+  - [x] 1.1 Write tests for Trip interface and data validation
+  - [x] 1.2 Create Trip TypeScript interface with required fields
+  - [x] 1.3 Implement localStorage utility functions (save, load, delete)
+  - [x] 1.4 Add data validation helpers for trip fields
+  - [x] 1.5 Write tests for localStorage operations
+  - [x] 1.6 Verify all tests pass
 
 - [ ] 2. **Trip Creation Form Component**
   - [ ] 2.1 Write tests for form component structure and props
