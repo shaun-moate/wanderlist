@@ -1,6 +1,5 @@
 ---
 description: Execute the next task.
-agent: developer
 ---
 
 Execute the next task.

@@ -9,7 +9,7 @@
 ### Features
 
 - [x] Trip Creation & Basic Cards - Allow users to create new trips with title, dates, and basic notes `[S]`
-- [ ] Story Cards Interface - Design and implement the card-based UI for trip information display `[M]`
+- [x] Story Cards Interface - Design and implement the card-based UI for trip information display `[M]`
 - [ ] Basic Dashboard - Create the main dashboard showing active trips and simple progress indicators `[S]`
 - [ ] Trip Editing - Add functionality to modify trip details, packing lists, and must-do items `[S]`
 - [ ] Data Persistence - Implement local storage for trip data `[M]`
