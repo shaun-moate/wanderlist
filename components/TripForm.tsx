@@ -43,6 +43,11 @@ export function TripForm({ onSubmit, onCancel }: TripFormProps) {
     if (errors[field as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [field]: undefined }))
     }
+
+    // Also clear dates error when either date field changes
+    if ((field === 'startDate' || field === 'endDate') && errors.dates) {
+      setErrors(prev => ({ ...prev, dates: undefined }))
+    }
   }
 
   const validateForm = (): boolean => {
@@ -56,7 +61,9 @@ export function TripForm({ onSubmit, onCancel }: TripFormProps) {
     }
 
     // Validate dates
-    if (!formData.startDate) {
+    if (!formData.startDate && !formData.endDate) {
+      newErrors.dates = 'Start date and end date are required'
+    } else if (!formData.startDate) {
       newErrors.dates = 'Start date is required'
     } else if (!formData.endDate) {
       newErrors.dates = 'End date is required'
@@ -88,10 +95,10 @@ export function TripForm({ onSubmit, onCancel }: TripFormProps) {
 
     try {
       const trip = createTripTemplate(
-        formData.title,
+        formData.title.trim(),
         formData.startDate,
         formData.endDate,
-        formData.notes || undefined
+        formData.notes?.trim() || undefined
       )
 
       onSubmit(trip)
